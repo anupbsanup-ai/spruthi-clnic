@@ -11,25 +11,25 @@ import AnimatedCounter from "../components/AnimatedCounter";
 import LeadForm from "../components/LeadForm";
 import TestimonialsSection from "../components/TestimonialsColumns";
 import AppointmentPrompt from "../components/AppointmentPrompt";
-import { BackgroundPaths } from "../components/BackgroundPaths";
+import TreatmentTicker from "../components/TreatmentTicker";
+import WhyUs from "../components/WhyUs";
+import StickyBar from "../components/StickyBar";
 import { clinicConfig, waLink } from "../config/clinic";
 
-
 const steps = [
-  { num: "01", title: "Book in Seconds", desc: "Fill the quick form or message us on WhatsApp. No lengthy registration needed.", icon: "" },
-  { num: "02", title: "Get Confirmed", desc: "We confirm your slot within minutes. You'll receive a WhatsApp message instantly.", icon: "" },
-  { num: "03", title: "Visit & Feel Better", desc: "Walk in at your time, skip the queue, and get expert care you can trust.", icon: "" },
+  { num: "01", title: "Book in Seconds", desc: "Fill the quick form or message us on WhatsApp. No lengthy registration needed.", icon: "📋" },
+  { num: "02", title: "Get Confirmed", desc: "We confirm your slot within minutes. You'll receive a WhatsApp message instantly.", icon: "✅" },
+  { num: "03", title: "Visit & Feel Better", desc: "Walk in at your time, skip the queue, and get expert care you can trust.", icon: "🏥" },
 ];
 
 const faqs = [
   { q: "Do I need to register before visiting?", a: "No. Just book via WhatsApp or the form on our website and come in at your time. No paperwork, no queues." },
-  { q: "How quickly will I get a confirmed slot?", a: "Usually within 5–10 minutes of messaging us. We're available All Days, 11am–5pm." },
-  { q: "What types of insurance do you accept?", a: "We accept major health insurance cards. Call us to confirm your specific policy is covered." },
-  { q: "Is there parking available at the clinic?", a: "Yes, free parking is available for patients directly in front of the clinic building." },
+  { q: "What are the clinic hours?", a: `Spurthi Clinic is open ${clinicConfig.hoursShort}, All Days including weekends. Morning slots till 1:30 PM and evening slots from 6:00 PM.` },
+  { q: "What is the consultation fee?", a: `The consultation fee is just ₹${clinicConfig.doctor.fee}. No hidden charges, no unnecessary tests.` },
+  { q: "How quickly will I get a confirmed slot?", a: "Usually within 5–10 minutes of messaging us on WhatsApp. We're available all days." },
+  { q: "Where is Spurthi Clinic located?", a: `We are located at ${clinicConfig.address}. Easily accessible from the surrounding areas of Bengaluru.` },
   { q: "Can I consult online/virtually?", a: "Yes, we offer tele-consultations for follow-up visits and minor concerns. Book via WhatsApp." },
 ];
-
-
 
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
@@ -63,11 +63,12 @@ export default function Home() {
       </Head>
 
       <Navbar />
+      <TreatmentTicker />
 
       {/* ── HERO ── */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1800&q=90" alt="Modern clinic" fill className="object-cover" priority />
+          <Image src={clinicConfig.heroImage} alt={`${clinicConfig.name} clinic`} fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-[#041830]/95 via-[#0a2540]/85 to-[#0a2540]/40" />
         </div>
 
@@ -79,21 +80,21 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-medium mb-6 border border-white/20">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              Open Today · All Days 11am–5pm
+              Open Today · {clinicConfig.hoursShort} · {clinicConfig.openDays}
             </motion.div>
 
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
               className="text-5xl md:text-[4.5rem] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
               Trusted Family Clinic<br />
               <span className="bg-gradient-to-r from-teal-300 via-cyan-300 to-teal-200 bg-clip-text text-transparent">
-                in Malleshwaram.
+                in Hebbal Kempapura.
               </span>
             </motion.h1>
 
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
               className="text-blue-200/90 text-lg md:text-xl mb-10 leading-relaxed max-w-lg">
-              Providing quality healthcare with 15+ years of experience.<br />
-              Quick consultation, accurate diagnosis, and patient-focused care.
+              {clinicConfig.doctor.experience}+ years of experience in general medicine.<br />
+              Quick consultation at just ₹{clinicConfig.doctor.fee}. No hidden charges.
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
@@ -119,13 +120,13 @@ export default function Home() {
               <div className="flex -space-x-2">
                 {["bg-blue-400","bg-teal-400","bg-purple-400","bg-rose-400"].map((c, i) => (
                   <div key={i} className={`w-9 h-9 rounded-full ${c} border-2 border-white/30 flex items-center justify-center text-white text-xs font-bold`}>
-                    {["P","R","A","K"][i]}
+                    {["R","A","K","P"][i]}
                   </div>
                 ))}
               </div>
               <div>
                 <div className="flex gap-0.5 mb-0.5">{[...Array(5)].map((_,i) => <span key={i} className="text-yellow-400">★</span>)}</div>
-                <p className="text-blue-300 text-xs">Trusted by families in Malleshwaram</p>
+                <p className="text-blue-300 text-xs">Trusted by families in {clinicConfig.city}</p>
               </div>
             </motion.div>
           </div>
@@ -136,7 +137,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-teal-400/20 to-blue-500/20 rounded-3xl blur-2xl scale-110" />
               <div className="relative bg-white/8 backdrop-blur-xl rounded-3xl border border-white/15 p-6 shadow-2xl">
                 <div className="relative w-full h-72 rounded-2xl overflow-hidden mb-5">
-                  <Image src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&q=80" alt="Doctor" fill className="object-cover object-top" />
+                  <Image src={clinicConfig.doctor.photo} alt={clinicConfig.doctor.name} fill className="object-cover object-top" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <div className="absolute bottom-3 left-3 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow">
                     <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" /> Accepting Patients Today
@@ -151,6 +152,10 @@ export default function Home() {
                       <p className="text-blue-300 text-xs mt-0.5">{l}</p>
                     </div>
                   ))}
+                </div>
+                <div className="bg-white/10 rounded-xl p-3 mb-4 text-center">
+                  <p className="text-teal-300 text-xs font-medium">Consultation Fee</p>
+                  <p className="text-white font-extrabold text-xl">₹{clinicConfig.doctor.fee}</p>
                 </div>
                 <a href={waLink()} target="_blank" rel="noopener noreferrer"
                   className="btn-brand block w-full text-center text-white font-bold py-3 rounded-xl">
@@ -169,32 +174,14 @@ export default function Home() {
         </motion.div>
       </section>
 
-
-      {/* ── BACKGROUND PATHS SECTION ── */}
-      <BackgroundPaths title="Minutes Away" subtitle="Expert Care Is" />
-
-      {/* ── URGENCY BANNER ── */}
-      <section className="py-4 px-6 text-center" style={{ background: "linear-gradient(135deg,#6c63ff,#4f46e5)" }}>
-        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3">
-          <div>
-            <p className="font-extrabold text-white text-lg leading-tight">Limited Appointments Available Today</p>
-            <p className="text-indigo-200 text-sm font-medium">Only a few slots remaining — book now to secure your time.</p>
-          </div>
-          <a href="#booking"
-            className="flex-shrink-0 bg-white text-indigo-700 font-bold px-6 py-2.5 rounded-xl hover:bg-indigo-50 transition text-sm">
-            Book Now →
-          </a>
-        </div>
-      </section>
-
-      {/* ── PROOF BAR ── */}
+      {/* ── RATING STRIP ── */}
       <section className="bg-[#0a1f44] py-4 px-6">
         <div className="max-w-5xl mx-auto flex flex-wrap gap-6 justify-center items-center text-sm">
           {[
-            { icon: "", text: "15+ years serving Malleshwaram" },
-            { icon: "", text: "Trusted by families across Bangalore" },
-            { icon: "", text: "Affordable consultation fees" },
-            { icon: "", text: "Open all days, 11am–5pm" },
+            { icon: "⭐", text: `${clinicConfig.doctor.rating} Google Rating` },
+            { icon: "🏥", text: `${clinicConfig.doctor.experience}+ Years of Experience` },
+            { icon: "💰", text: `₹${clinicConfig.doctor.fee} Consultation Fee` },
+            { icon: "📅", text: `Open ${clinicConfig.openDays} · ${clinicConfig.hoursShort}` },
           ].map((item) => (
             <div key={item.text} className="flex items-center gap-2 text-blue-200">
               <span>{item.icon}</span>
@@ -218,6 +205,20 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── URGENCY BANNER ── */}
+      <section className="py-4 px-6 text-center" style={{ background: "linear-gradient(135deg,#0d9488,#0ea5e9)" }}>
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div>
+            <p className="font-extrabold text-white text-lg leading-tight">Limited Appointments Available Today</p>
+            <p className="text-teal-100 text-sm font-medium">Book now via WhatsApp — confirmed in minutes.</p>
+          </div>
+          <a href={waLink("I want to book an appointment today")} target="_blank" rel="noopener noreferrer"
+            className="flex-shrink-0 bg-white text-teal-700 font-bold px-6 py-2.5 rounded-xl hover:bg-teal-50 transition text-sm">
+            Book Now →
+          </a>
+        </div>
+      </section>
+
       {/* ── BOOKING FORM ── */}
       <section id="booking" className="py-24 px-6 bg-slate-50">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -230,8 +231,8 @@ export default function Home() {
             <p className="text-gray-500 leading-relaxed mb-7 text-lg">
               Fill the quick form — we save your details and open WhatsApp instantly so the doctor confirms your slot in minutes.
             </p>
-            <div className="space-y-3">
-              {["No registration, no paperwork", "WhatsApp confirmation in minutes", "Same-day appointments available"].map((item) => (
+            <div className="space-y-3 mb-6">
+              {["No registration, no paperwork", "WhatsApp confirmation in minutes", "Same-day appointments available", `Just ₹${clinicConfig.doctor.fee} consultation fee`].map((item) => (
                 <div key={item} className="flex items-center gap-3 text-gray-600">
                   <span className="w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -241,6 +242,10 @@ export default function Home() {
                   <span className="font-medium">{item}</span>
                 </div>
               ))}
+            </div>
+            <div className="bg-teal-50 border border-teal-200 rounded-2xl p-4">
+              <p className="text-teal-800 text-sm font-semibold">📍 {clinicConfig.addressShort}</p>
+              <p className="text-teal-600 text-sm mt-1">📞 {clinicConfig.phone}</p>
             </div>
           </AnimatedSection>
           <AnimatedSection direction="right">
@@ -260,10 +265,10 @@ export default function Home() {
               <div className="absolute -top-6 -left-6 w-72 h-72 bg-teal-100 rounded-full -z-10" />
               <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-blue-100 rounded-full -z-10" />
               <div className="relative w-full h-[480px] rounded-3xl overflow-hidden shadow-2xl">
-                <Image src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=700&q=80" alt="Doctor" fill className="object-cover object-top" />
+                <Image src={clinicConfig.doctor.photoAlt} alt={clinicConfig.doctor.name} fill className="object-cover object-top" />
               </div>
               <div className="absolute -bottom-5 -right-4 bg-gradient-to-br from-teal-600 to-blue-700 text-white px-6 py-5 rounded-2xl shadow-2xl text-center">
-                <p className="text-3xl font-extrabold">5K+</p>
+                <p className="text-3xl font-extrabold">{clinicConfig.doctor.patients}</p>
                 <p className="text-blue-200 text-xs mt-1">Patients Treated</p>
               </div>
             </div>
@@ -294,12 +299,13 @@ export default function Home() {
               ))}
             </div>
             <div className="flex gap-3">
-              <Link href="/about" className="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold px-7 py-3.5 rounded-2xl transition hover:shadow-lg">
+              <Link href="/about" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold px-7 py-3.5 rounded-2xl transition hover:shadow-lg">
                 Full Profile →
               </Link>
-              <Link href="/doctors" className="inline-flex items-center gap-2 border-2 border-gray-200 hover:border-teal-400 text-gray-700 font-semibold px-7 py-3.5 rounded-2xl transition">
-                All Doctors
-              </Link>
+              <a href={waLink()} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border-2 border-teal-200 hover:border-teal-400 text-teal-700 font-semibold px-7 py-3.5 rounded-2xl transition">
+                Book Appointment
+              </a>
             </div>
           </AnimatedSection>
         </div>
@@ -314,15 +320,8 @@ export default function Home() {
             <p className="text-gray-500 max-w-xl mx-auto text-lg">Quality treatment for you and your family, all under one roof</p>
           </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { label: "General Health Consultation", desc: "Expert advice for all general health concerns and day-to-day illnesses." },
-              { label: "Fever & Infection Treatment", desc: "Prompt diagnosis and effective treatment for viral and bacterial infections." },
-              { label: "Cold & Cough Treatment", desc: "Relief-focused care for respiratory infections, cold, and cough." },
-              { label: "Blood Pressure & Diabetes Check", desc: "Regular monitoring and management of BP and blood sugar levels." },
-              { label: "Preventive Health Checkups", desc: "Routine screenings to detect health issues early and stay well." },
-              { label: "Basic Medical Advice & Treatment", desc: "Practical, affordable medical guidance for patients of all ages." },
-            ].map((s, i) => (
-              <AnimatedSection key={s.label} delay={i * 0.07}>
+            {clinicConfig.services.map((s, i) => (
+              <AnimatedSection key={s.title} delay={i * 0.07}>
                 <div className="group bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:border-teal-200 transition-all duration-300 hover:-translate-y-1 flex gap-4 items-start">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform" style={{ background: "linear-gradient(135deg,#0d9488,#0ea5e9)" }}>
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -330,7 +329,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-gray-800 text-base mb-1">{s.label}</h3>
+                    <h3 className="font-bold text-gray-800 text-base mb-1">{s.title}</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
                   </div>
                 </div>
@@ -346,6 +345,8 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── WHY US ── */}
+      <WhyUs />
 
       {/* ── HOW IT WORKS ── */}
       <section className="py-24 px-6 bg-slate-50">
@@ -375,32 +376,6 @@ export default function Home() {
               Book Now on WhatsApp
             </a>
           </AnimatedSection>
-        </div>
-      </section>
-
-      {/* ── CLINIC GALLERY ── */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <AnimatedSection className="text-center mb-14">
-            <p className="text-teal-600 font-semibold text-sm uppercase tracking-widest mb-2">Our Facility</p>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-3">A Clinic You&apos;ll Feel Comfortable In</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Modern equipment, clean spaces, and a calming environment designed for your comfort</p>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[
-              { src: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80", span: "md:col-span-2 md:row-span-2", h: "h-64 md:h-full", alt: "Sanjeevani Clinic reception and waiting area" },
-              { src: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=400&q=80", span: "", h: "h-40", alt: "Modern medical equipment at Sanjeevani Clinic" },
-              { src: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&q=80", span: "", h: "h-40", alt: "Doctor consultation room" },
-              { src: "https://images.unsplash.com/photo-1581595219315-a187dd40c322?w=400&q=80", span: "", h: "h-40", alt: "Medical examination at the clinic" },
-              { src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80", span: "", h: "h-40", alt: "Health checkup services" },
-            ].map((img, i) => (
-              <AnimatedSection key={i} delay={i * 0.08} className={img.span}>
-                <div className={`relative ${img.h} rounded-2xl overflow-hidden group`}>
-                  <Image src={img.src} alt={img.alt} fill className="object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -434,11 +409,10 @@ export default function Home() {
       {/* ── AI PROMPT BOOKING ── */}
       <AppointmentPrompt />
 
-
       {/* ── CTA BANNER ── */}
       <section className="relative py-28 px-6 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1600&q=80" alt="Clinic" fill className="object-cover" />
+          <Image src={clinicConfig.ctaImage} alt={clinicConfig.name} fill className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#041830]/95 to-[#0a2540]/90" />
         </div>
         <div className="relative text-center text-white max-w-2xl mx-auto">
@@ -448,16 +422,18 @@ export default function Home() {
               Book Your Visit<br />
               <span className="text-teal-300">Today.</span>
             </h2>
-            <p className="text-blue-200 text-lg mb-10">Same-day appointments available. No queues. No waiting.</p>
+            <p className="text-blue-200 text-lg mb-10">
+              Same-day appointments available. Just ₹{clinicConfig.doctor.fee}. No queues.
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href={waLink()} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-3 bg-white text-teal-700 font-bold text-lg px-10 py-4 rounded-2xl hover:bg-slate-50 transition hover:scale-105 shadow-2xl">
                 Book on WhatsApp
               </a>
-              <Link href="/book"
+              <a href={`tel:${clinicConfig.phoneRaw}`}
                 className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white font-semibold text-lg px-10 py-4 rounded-2xl hover:bg-white/10 transition">
-                View Slots →
-              </Link>
+                Call {clinicConfig.phone}
+              </a>
             </div>
           </AnimatedSection>
         </div>
@@ -465,25 +441,7 @@ export default function Home() {
 
       <Footer />
       <WhatsAppButton />
-
-      {/* ── RED FLOATING BOOK NOW BUTTON (desktop) ── */}
-      <a href="#booking"
-        className="hidden md:flex fixed bottom-6 right-6 z-50 items-center gap-2 text-white font-bold px-6 py-4 rounded-full shadow-2xl transition-all hover:scale-105 hover:-translate-y-1"
-        style={{ background: "linear-gradient(135deg,#6c63ff,#4f46e5)", boxShadow: "0 5px 20px rgba(108,99,255,0.5)" }}>
-        Book Now
-      </a>
-
-      {/* ── STICKY BOTTOM CTA (mobile) ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-200 px-4 py-3 flex gap-3 shadow-2xl">
-        <a href={waLink()} target="_blank" rel="noopener noreferrer"
-          className="flex-1 bg-green-500 text-white font-bold py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
-          Free Consultation
-        </a>
-        <Link href="/book"
-          className="flex-1 btn-brand text-white font-bold py-3 rounded-xl text-sm text-center flex items-center justify-center gap-2">
-          Book Appointment
-        </Link>
-      </div>
+      <StickyBar />
     </>
   );
 }
