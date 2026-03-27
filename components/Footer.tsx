@@ -43,8 +43,11 @@ export default function Footer() {
           <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Services</h4>
           <ul className="space-y-3 text-gray-400 text-sm">
             {clinicConfig.services.slice(0, 5).map((s) => (
-              <li key={s.title} className="flex items-center gap-2">
-                <span className="text-teal-400">›</span> {s.title}
+              <li key={s.title}>
+                <a href={waLink(`I want to know more about ${s.title}`)} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-white transition">
+                  <span className="text-teal-400">›</span> {s.title}
+                </a>
               </li>
             ))}
           </ul>
@@ -65,7 +68,10 @@ export default function Footer() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              {clinicConfig.address}
+              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(clinicConfig.address)}`}
+                target="_blank" rel="noopener noreferrer" className="hover:text-white transition">
+                {clinicConfig.address}
+              </a>
             </li>
             <li className="flex items-start gap-3">
               <svg className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +83,10 @@ export default function Footer() {
               <svg className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              {clinicConfig.hours}
+              <a href={waLink("I want to check available appointment slots")} target="_blank" rel="noopener noreferrer"
+                className="hover:text-white transition">
+                {clinicConfig.hours}
+              </a>
             </li>
           </ul>
           <a href={waLink()} target="_blank" rel="noopener noreferrer"
